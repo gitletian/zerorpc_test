@@ -4,6 +4,8 @@ import pdb
 import zerorpc
 import time
 
+
+#  zerorpc 访问 是进行的, 如果server 在 2*heartbeat 没有响应 会报错, 所以只能异步 执行, 并且服务器端应该 也应该单独启动 进程进行运行
 ###################################################### 单 RPC ##################################################################
 class HelloRPC(object):
     def hello(self, name):

@@ -21,22 +21,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-
-
-from __future__ import print_function
-from __future__ import absolute_import
-from builtins import range
-
-from zerorpc import zmq
-import zerorpc
-
-endpoint = "tcp://0.0.0.0:4243"
-TIME_FACTOR = 0.2
-
-
-def test_events_channel_client_side():
-    '''
-    测试 channel
+'''
     zmq.ROUTER   socket 的类型
 
     REQ-REP模式: 请求回复模式，REQ请求然后等待响应。REQ监听然后回复:  REQ: REP 是 N:1 的关系(顺序处理)
@@ -73,6 +58,23 @@ def test_events_channel_client_side():
         REP模式也不能省略recv-send中的任何一个，不能跳过recv直接进行send，这都将引发错误。
         另外zeromq不能为你实现其他的协议，比如你不能用zeromq实现一个HTTP服务器，zeromq有自己的传输协议，
         或者说zeromq有自己的协议用来使上面的模式运作。
+'''
+
+
+from __future__ import print_function
+from __future__ import absolute_import
+from builtins import range
+
+from zerorpc import zmq
+import zerorpc
+
+endpoint = "tcp://0.0.0.0:4243"
+TIME_FACTOR = 0.2
+
+
+def test_events_channel_client_side():
+    '''
+    测试 channel
     :return:
     '''
 
@@ -122,8 +124,7 @@ def test_events_channel_client_side_server_send_many():
     assert event.identity is not None
 
     for x in range(10):
-        reply_event = server.new_event('someanswer', (x,),
-                xheader={'response_to': event.header['message_id']})
+        reply_event = server.new_event('someanswer', (x,), xheader={'response_to': event.header['message_id']})
         reply_event.identity = event.identity
         server.emit_event(reply_event)
     for x in range(10):
